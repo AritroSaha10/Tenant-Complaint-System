@@ -1,0 +1,121 @@
+
+<html>
+    <head>
+      <title>Tenant Complaint System</title>
+      <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+      <link rel="stylesheet" href="style.css" />
+      <style type="text/css">
+        #inline select,
+        #inline p {
+          display: inline;
+          vertical-align: top;
+          line-height: 28px;
+        }
+      </style>
+    
+    </head>
+
+    <body>
+        <div id="login_div" class="main-div" style="display:none">
+            <h3>Tenant Complaint System Login</h3>
+            <input type="email" placeholder="Email..." id="email_field" />
+            <input type="password" placeholder="Password..." id="password_field" />
+        
+            <button id="login" onclick="login()">Login</button>
+        </div>
+
+        <div id="user_div" class="loggedin-div" style="display:none">
+            <h2>Tenant Complaint System</h2>
+            <p id="user_para">Welcome to the Tenant Complaint System. You're currently logged in.</p>
+          
+            <hr/>
+            <h5 id="formCompleted" style="display: none">Your complaint has been submitted!</h5>
+
+            <form onsubmit="file_complaint();" target="frame">
+
+                <h4>File a Complaint</h4>
+
+                <p class="required-warning"> Required</p>
+                
+                <div id="inline">
+                    <p class="required">What is your full name?</p>
+                    <br/>
+                    <input type="text" placeholder="Enter your name..." id="name" required/>
+                </div>
+
+                <br/>
+                <br/>
+
+                <div id="inline">
+                    <p class="required">What is the unit number and address of your building?</p>
+                    <br/>
+                    <input type="text" placeholder="The unit number and address of your building..." id="unit" required/>
+                </div>
+
+                <br/>
+                <br/>
+
+                <div id="inline">
+                  <p class="required">What is the problem?</p> 
+                  <br/>
+                  
+                  <textarea placeholder="The issue you are facing..." id="issueText" rows=4 style="width: 300%"></textarea> 
+                </div>
+                
+                <br/>
+                <br/>
+
+                <div id="inline">
+                    <p class="required">What room is the problem in?</p>
+                    <br/>
+                    <input type="text" placeholder="The room where the problem is located..." id="locationOfProblem" style="width: 200%" required/>
+                </div>
+
+                <br/>
+                <br/>
+                
+                <div id="inline">
+                    <p>Anything else?</p>
+                    <br/>
+                    <textarea placeholder="Anything else you'd like to add..." id="extraComments" rows=4 style="width: 300%"></textarea> 
+                </div>
+
+                <br/>
+                <br/>
+            
+                <p></p>
+            
+                <button type="submit">
+                    Submit Complaint
+                  </button>
+            
+                <p></p>
+            
+            </form>
+
+            <hr/>
+            <button onclick="logout()">
+              Logout
+            </button>
+
+        </div>
+    
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="/__/firebase/7.15.4/firebase-app.js"></script>
+
+        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+        <script src="/__/firebase/7.15.4/firebase-analytics.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="/__/firebase/7.15.4/firebase-auth.js"></script>
+        <script src="/__/firebase/7.15.4/firebase-firestore.js"></script>
+        <script src="/__/firebase/7.15.4/firebase-functions.js"></script>
+        
+        <!-- Initialize Firebase -->
+        <script src="/__/firebase/init.js"></script>
+
+        <script src="index.js"></script>
+
+        <iframe name="frame"></iframe>
+    </body>
+</html>
