@@ -63,8 +63,7 @@ function logout(){
 function file_complaint(){
     // TODO: Upload the data to a database and to a trello board
     if (_user == null) {
-        document.getElementById("formCompleted").style.display = "block";
-        document.getElementById("formCompleted").innerText = "You're not logged in!";
+        show_failure_alert("You're not logged in!");
     }
 
     let name = document.getElementById("name").value;
@@ -83,12 +82,22 @@ function file_complaint(){
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
-        document.getElementById("formCompleted").style.display = "block";
-        document.getElementById("formCompleted").innerText = "Your complaint has been submitted!";
+        show_success_alert("Your complaint has been submitted!");
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
-        document.getElementById("formCompleted").style.display = "block";
-        document.getElementById("formCompleted").innerText = "An error occured. Please try again later.";
+        show_failure_alert("An error occured. Please try again later.");
     });
+}
+
+function show_success_alert(message) {
+    document.getElementById("alertText").innerText = message;
+    document.getElementById("alertMessage").style.display = "block";
+    document.getElementById("alertMessage").classList = ["alert success"];
+}
+
+function show_failure_alert(message) {
+    document.getElementById("alertText").innerText = message;
+    document.getElementById("alertMessage").style.display = "block";
+    document.getElementById("alertMessage").classList = ["alert"];
 }

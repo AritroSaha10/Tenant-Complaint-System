@@ -16,6 +16,11 @@
     </head>
 
     <body>
+        <div class="alert" id="alertMessage" style="display: none">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <p id="alertText">This is an alert box</p>
+        </div>
+
         <div id="login_div" class="main-div" style="display:none">
             <h3>Tenant Complaint System Login</h3>
             <input type="email" placeholder="Email..." id="email_field" />
