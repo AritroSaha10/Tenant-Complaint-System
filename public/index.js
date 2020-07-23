@@ -71,22 +71,65 @@ function file_complaint(){
     let problem = document.getElementById("issueText").value;
     let locationOfProblem = document.getElementById("locationOfProblem").value;
     let extraComments = document.getElementById("extraComments").value;
-      
-    db.collection("complaints").add({
+    
+    let complaint = {
         full_name: name,
         email_address: _user.email,
         complaint: problem,
         extra_comments: extraComments,
         location_of_problem: locationOfProblem,
-        unit_address_and_number: unit
-    })
-    .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
-        show_success_alert("Your complaint has been submitted!");
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-        show_failure_alert("An error occured. Please try again later.");
+        unit_address_and_number: unit,
+        timestamp: Date.now()
+    };
+
+    const userRef = db.collection('users').doc(_user.uid)
+
+    userRef.get()
+    .then((docSnapshot) => {
+        if (docSnapshot.exists) {
+            userRef.onSnapshot((doc) => {
+                userRef.update({
+                    complaints: firebase.firestore.FieldValue.arrayUnion(complaint)
+                }).then(function() {
+                    console.log("Updated Document with ID: ", userRef.id);
+                    show_success_alert("Your complaint has been submitted!");
+                }).catch(function(error) {
+                    console.error("Error adding document: ", error);
+                    show_failure_alert("An error occured. Please try again later.");
+                });
+        });
+        } else {
+            userRef.set({
+                complaints: [complaint],
+                full_name: name,
+                email_address: _user.email
+            }).then(function() {
+                console.log("Document written with ID: ", userRef.id);
+                // notify landlord of complaint
+                const func = functions.httpsCallable('notifyLandlord');
+                func({
+                    full_name: name,
+                    email_address: _user.email,
+                    timestamp: new Date().toLocaleString(),
+                    complaint: complaint,
+                    extra_comments: extraComments,
+                    location_of_problem: locationOfProblem,
+                    unit_address_and_number: unit
+                }).then(function(res) {
+                    show_success_alert("Your complaint has been submitted!");
+                    console.log(res);
+                    return;
+                })
+                .catch(function(error) {
+                    console.error("Error sending email: ", error);
+                    show_failure_alert("An error occured. Please try again later.");
+                    return;
+                });
+            }).catch(function(error) {
+                console.error("Error adding document: ", error);
+                show_failure_alert("An error occured. Please try again later.");
+            });
+        }
     });
 }
 
