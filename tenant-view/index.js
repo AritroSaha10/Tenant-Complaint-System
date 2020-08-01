@@ -90,7 +90,7 @@ function file_complaint(){
         image_reference: imageRef
     };
 
-    const userRef = db.collection('users').doc(_user.uid)
+    const userRef = db.collection('users').doc(_user.uid);
 
     userRef.get()
     .then((docSnapshot) => {

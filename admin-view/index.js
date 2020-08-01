@@ -62,13 +62,35 @@ auth.onAuthStateChanged(function(user) {
         let user = auth.currentUser;
 
         if(user != null){
-            let email_address = user.email;
-
-            // TODO: Check whether the user is an admin or not, if not then sign them out and show an error message
-            
-            document.getElementById("user-welcome").innerHTML = "Welcome to the admin page, " + email_address;
-
             current_user = user;
+            let email_address = user.email;
+            // TODO: Check whether the user is an admin or not, if not then sign them out and show an error message
+            // 1. Get user object from database by finding email
+            // 2. Check if admin variable is set to true
+
+            const isAdmin = false;
+
+            db.collection('users').doc(user.uid).get().then((doc) => {
+                if (doc.exists) {
+                    if (String(doc.data().admin) === "true") {
+                        // User is an admin
+                        isAdmin = true;
+                    }
+                } else {
+                    // TODO: Make document for user
+                    console.log("Document does not exist?");
+                }
+            }).catch((error) => {
+                // Return to login page and report error
+                console.log("Error getting admin status: " + error.message);
+            });
+
+            if (!isAdmin) {
+                // User is not an admin, log user out and show error
+                logout();
+                
+            }
+            document.getElementById("user-welcome").innerHTML = "Welcome to the admin page, " + email_address;
         }
 
     } else {
@@ -78,7 +100,6 @@ auth.onAuthStateChanged(function(user) {
         document.getElementById("login-page").style.display = "block";
 
         email_address = "";
-
     }
 });
 
