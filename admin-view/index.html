@@ -25,43 +25,47 @@
     </head>
 
     <body>
-        <div id="login-page" class="container text-center form-signin" style="display: none">
-            <svg width="5em" height="5em" viewBox="0 0 16 16" class="bi bi-person-badge mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M12 1H4a1 1 0 0 0-1 1v11.755S4 12 8 12s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
-                <path fill-rule="evenodd" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5z"/>
-            </svg>
+        <div class="container">
+            <div id="alert_holder" class="fixed-top" style="padding-top:20px; padding-bottom:20px; padding-left:20px; padding-right:20px;"></div>
 
-            <h1 class="h3 mb-3 font-weight-normal">Admin View</h1>
+            <!-- Login Page, shown when user is not logged in -->
+            <div id="login-page" class="container text-center form-signin" style="display: none">
+                <svg width="5em" height="5em" viewBox="0 0 16 16" class="bi bi-person-badge mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M12 1H4a1 1 0 0 0-1 1v11.755S4 12 8 12s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                    <path fill-rule="evenodd" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5z"/>
+                </svg>
 
-            <label for="inputEmail" class="sr-only">Email Address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email Address" required="" autofocus="">
+                <h1 class="h3 mb-3 font-weight-normal">Admin View</h1>
 
-            
-            <div class="input-group">
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" data-toggle="password">
+                <label for="inputEmail" class="sr-only">Email Address</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email Address" required="" autofocus="">
 
-                <div class="input-group-append">
-                    <span class="input-group-text">
-                        <i class="fa fa-eye"></i>
-                    </span>
+                
+                <div class="input-group">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" data-toggle="password">
+
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
                 </div>
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input id="rememberMeOption" type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Sign in</button>
             </div>
 
-            <div class="checkbox mb-3">
-                <label>
-                    <input id="rememberMeOption" type="checkbox" value="remember-me"> Remember me
-                </label>
+            <!-- User Content Page, shown after user has logged in -->
+            <div id="user-page" class="container text-center" style="display: none">
+                <h1 class="h3 mb-3 font-weight-normal" id="user-welcome">Welcome to the admin page, </h1>
+                <button type="button" class="btn btn-lg btn-danger" onclick="logout()">Log Out</button>
             </div>
-
-            <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Sign in</button>
-
-        </div>
-
-
-        <div id="user-page" class="container text-center" style="display: none">
-            <h1 class="h3 mb-3 font-weight-normal" id="user-welcome">Welcome to the admin page, </h1>
-            <button type="button" class="btn btn-lg btn-danger" onclick="logout()">Log Out</button>
         </div>
 
         <!-- Firebase Imports -->
@@ -75,6 +79,8 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+        <!-- bootbox.js, a library that creates bootstrap alerts dynamically -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
         <script src="/__/firebase/init.js"></script>
         <script src="index.js"></script>
     </body>

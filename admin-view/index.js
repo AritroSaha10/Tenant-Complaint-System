@@ -51,46 +51,47 @@ function logout(){
     auth.signOut();
 }
 
+// Show bootstrap alert
+function bootstrap_alert(message, alert_type, strong_text) {
+    // Dismiss the first alert if there are more than 3 alert
+    if ($("#alert_holder").children().toArray().length > 2) {
+        // Gets the first element in the alert_holder div, finds its button, and clicks it to make sure it fades
+        $($("#alert_holder").children()[0]).find("button")[0].click();
+    }
+
+    // Add new alert
+    $('#alert_holder').append('<div class="alert ' + alert_type + ' alert-dismissible fade show" role="alert"><strong>' + strong_text + '</strong> ' + message + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+}
+
 // Auth flow
 auth.onAuthStateChanged(function(user) {
     if (user) {
-        // User is signed in.
-
-        document.getElementById("user-page").style.display = "block";
-        document.getElementById("login-page").style.display = "none";
-
+        // User has signed in\
         let user = auth.currentUser;
 
         if(user != null){
             current_user = user;
             let email_address = user.email;
-            // TODO: Check whether the user is an admin or not, if not then sign them out and show an error message
-            // 1. Get user object from database by finding email
-            // 2. Check if admin variable is set to true
 
-            const isAdmin = false;
-
-            db.collection('users').doc(user.uid).get().then((doc) => {
+            // Checks whether user's UID is part of admin-list, if they're not an admin / something goes wrong then logs them out and tells them 
+            db.collection('admin-list').doc(user.uid).get().then((doc) => {
                 if (doc.exists) {
-                    if (String(doc.data().admin) === "true") {
-                        // User is an admin
-                        isAdmin = true;
-                    }
+                    // User is an admin since they are part of the admin list
+                    document.getElementById("user-welcome").innerHTML = "Welcome to the admin page, " + email_address;
+
+                    // Hide the login page and show user page
+                    document.getElementById("user-page").style.display = "block";
+                    document.getElementById("login-page").style.display = "none";
                 } else {
-                    // TODO: Make document for user
-                    console.log("Document does not exist?");
+                    // User is not an admin because they are not a part of the admin list
+                    logout();
+                    bootstrap_alert("Sorry, but you are not an admin. Please go to <a href='https://tenant-complaint-system.web.app/'>this link</a> if you are not an admin.", "alert-danger", "Error!");
                 }
             }).catch((error) => {
                 // Return to login page and report error
                 console.log("Error getting admin status: " + error.message);
-            });
-
-            if (!isAdmin) {
-                // User is not an admin, log user out and show error
                 logout();
-                
-            }
-            document.getElementById("user-welcome").innerHTML = "Welcome to the admin page, " + email_address;
+            });
         }
 
     } else {
