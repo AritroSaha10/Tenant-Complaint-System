@@ -56,18 +56,15 @@ function upload_image() {
         let imageRef = storageRef.child("complaint-images/" + refID + "." + file.name.split('.').pop());
 
         // TODO: Add handlers that check whether the files successfully uploaded or not
-        imageRef.put(file).then((snapshot) => {
-            console.log('Uploaded ' + file.name);
-            imageReferences[i] = imageRef.fullPath;
-        });
+        imageRef.put(file);
+
+        imageReferences.push("complaint-images/" + refID + "." + file.name.split('.').pop());
     };
 
     return imageReferences;
 }
 
-
 function file_complaint(){
-    // TODO: Upload the data to a database and to a trello board
     if (_user == null) {
         show_failure_alert("You're not logged in!");
     }
@@ -78,6 +75,8 @@ function file_complaint(){
     let locationOfProblem = document.getElementById("locationOfProblem").value;
     let extraComments = document.getElementById("extraComments").value;
     let imageRef = upload_image();
+
+    console.log(imageRef);
 
     let complaint = {
         full_name: name,

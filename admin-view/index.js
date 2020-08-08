@@ -66,7 +66,7 @@ function bootstrap_alert(message, alert_type, strong_text) {
 // Auth flow
 auth.onAuthStateChanged(function(user) {
     if (user) {
-        // User has signed in\
+        // User has signed in
         let user = auth.currentUser;
 
         if(user != null){
@@ -80,9 +80,10 @@ auth.onAuthStateChanged(function(user) {
                     document.getElementById("user-welcome").innerHTML = "Welcome to the admin page, " + email_address;
 
                     // Hide the login page and show user page
-                    document.getElementById("user-page").style.display = "block";
-                    document.getElementById("login-page").style.display = "none";
-                } else {
+                    $("#login-page").fadeOut(400, () => {
+                        $("#user-page").fadeIn(400);
+                    });
+                 } else {
                     // User is not an admin because they are not a part of the admin list
                     logout();
                     bootstrap_alert("Sorry, but you are not an admin. Please go to <a href='https://tenant-complaint-system.web.app/'>this link</a> if you are not an admin.", "alert-danger", "Error!");
@@ -96,11 +97,13 @@ auth.onAuthStateChanged(function(user) {
 
     } else {
         // No user is signed in.
-
-        document.getElementById("user-page").style.display = "none";
-        document.getElementById("login-page").style.display = "block";
+        $("#user-page").fadeOut(400, () => {
+            $("#login-page").fadeIn(400);
+        });
+        
 
         email_address = "";
+        current_user = null;
     }
 });
 
