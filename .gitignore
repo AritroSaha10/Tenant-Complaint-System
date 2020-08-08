@@ -2,3 +2,5 @@
 /.firebaserc
 /.git
 node_modules
+firebase-debug.log
+.firebaserc
