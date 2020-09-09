@@ -1,6 +1,6 @@
 # Tenant Complaint System
 
-The Tenant Complaint System is a system that allows for tenants to file complaints about their apartment and landlords to view them through seperate portals.
+The Tenant Complaint System is a system that allows for tenants to file complaints about their apartment and landlords to view them through separate portals.
 
 ## Project Info
 
