@@ -18,6 +18,9 @@
             integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
         crossorigin="anonymous">
 
+        <link rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <!-- My CSS -->
         <link rel="stylesheet" href="style.css">
 
@@ -29,7 +32,7 @@
             <div id="alert_holder" class="fixed-top" style="padding-top:20px; padding-bottom:20px; padding-left:20px; padding-right:20px;"></div>
 
             <!-- Login Page, shown when user is not logged in -->
-            <div id="login-page" class="container text-center form-signin" style="display: none">
+            <div id="login-page" class="container text-center form-signin center-div" style="display: none">
                 <svg width="5em" height="5em" viewBox="0 0 16 16" class="bi bi-person-badge mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M12 1H4a1 1 0 0 0-1 1v11.755S4 12 8 12s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
                     <path fill-rule="evenodd" d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5z"/>
@@ -58,15 +61,21 @@
                     </label>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="login()">Sign in</button>
+                <button class="btn btn-lg btn-primary btn-block buttonload" id="inputLoginButton" type="submit" onclick="login()">
+                    Sign in
+                </button>
             </div>
 
             <!-- User Content Page, shown after user has logged in -->
             <div id="user-page" style="display: none">
-                <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top pb-0-1">
                     <a class="navbar-brand" href="#">Tenant Complaint System</a>
                     
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userNavbar" aria-controls="userNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+
+                    <div class="collapse navbar-collapse" id="userNavbar">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -87,19 +96,28 @@
                     </div>
                 </nav>
 
-                <div class="d-flex justify-content-center">
-                    <div class="card text-center" style="width: 22rem;">
-                        <img class="card-img-top" src="https://images.homedepot-static.com/productImages/df8e9b7f-6013-48bc-a1b3-f99082482eff/svn/white-glacier-bay-two-piece-toilets-n2316-64_1000.jpg" alt="Card image cap"> <!-- Image if applicable -->
-                        <div class="card-body">
-                          <h5 class="card-title">Complaint from John Smith</h5>
-                          <h6 class="card-subtitle mb-2 text-muted">1234 Somwehere Island Drive</h6> <!-- The address of the place -->
-                          <p class="card-text"><strong>Complaint: </strong>The toilet is leaking.</p> <!-- Trim text after certain amount -->
-                          <a href="#" class="card-link">View More</a> <!-- Shows a popup with more information ie. Room of Problem, Anything else, images; should look similar to a trello card-->
-                          <a href="#" class="card-link">Respond</a> <!-- Link to the user's email address -->
-                        </div>
-                        <div class="card-footer text-muted">
-                            2 days ago
-                        </div> <!-- Relative date -->
+                <br/>
+                <br/>
+
+                <!-- All complaints -->
+                <div class="container">
+                    <div class="row justify-content-center" id="complaintCards">
+                        <!--
+                        <div class="col-auto mb-3">
+                            <div class="card text-center" style="width: 22rem;">
+                                <img class="card-img-top" src="https://images.homedepot-static.com/productImages/df8e9b7f-6013-48bc-a1b3-f99082482eff/svn/white-glacier-bay-two-piece-toilets-n2316-64_1000.jpg" alt="Card image cap" style="padding:10px; object-fit: contain;"> <! - - Image if applicable - - >
+                                <div class="card-body">
+                                    <h5 class="card-title">Complaint from John Smith</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">1234 Somwehere Island Drive</h6> <! - - The address of the place - - >
+                                    <p class="card-text"><strong>Complaint: </strong>The toilet is leaking.</p> <! - - Trim text after certain amount - - >
+                                    <a href="#" class="card-link">View More</a> <! - - Shows a popup with more information ie. Room of Problem, Anything else, images; should look similar to a trello card- - >
+                                    <a href="#" class="card-link">Respond</a> <! - - Link to the user's email address - - >
+                                </div>
+                                <div class="card-footer text-muted">
+                                    2 days ago
+                                </div> <! - - Relative date - - >
+                            </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -116,8 +134,9 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-        <!-- bootbox.js, a library that creates bootstrap alerts dynamically -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+        <!-- Moment.js for relative time -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
+
         <script src="/__/firebase/init.js"></script>
         <script src="index.js"></script>
     </body>

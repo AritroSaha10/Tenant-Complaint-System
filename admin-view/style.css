@@ -7,10 +7,17 @@ body {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
-  align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f5f5f5;
+}
+
+div.center-div {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .form-signin {
@@ -42,4 +49,17 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.buttonload {
+  color: white; 
+  padding: 12px 16px; 
+  font-size: 16px
+}
+
+img.card-img-top {
+  object-fit: contain;
+  max-width: 200px;
+  max-height: 200px;
+  margin: auto;
 }
