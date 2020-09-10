@@ -1,5 +1,6 @@
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 let current_user = null;
 
@@ -83,6 +84,7 @@ function generateComplaintCard(complaint_data) {
 
     // Set attributes
     column_div.setAttribute("class", "col-auto mb-3");
+    // TODO: Create data id that identifies both the post, likely by using the timestamp and the user number
     // column_div.setAttribute("data-id", id);
 
     card_div.setAttribute("class", "card text-center");
@@ -101,11 +103,7 @@ function generateComplaintCard(complaint_data) {
     let image_refs = complaint_data.image_reference;
 
     // Create all elements relating to data
-    let card_img;
-    if (image_refs.length != 0) {
-        let card_img = document.createElement("img");
-        card_img.setAttribute("src", image_refs[0]);
-    }
+    let card_img = null;
     let card_title = document.createElement("h5");
     let card_subtitle_address = document.createElement("h6");
     let card_text_complaint = document.createElement("p");
@@ -114,6 +112,18 @@ function generateComplaintCard(complaint_data) {
     let card_respond = document.createElement("a");
 
     // Set attributes
+    if (image_refs.length != 0) {
+        card_img = document.createElement("img");
+        card_img.setAttribute("class", "card-img-top");
+        storage.ref(image_refs[0]).getDownloadURL().then(function(url) {
+            card_img.setAttribute("src", url);
+        }).catch(function(error) {
+            // Show error image and send error to console
+            card_img.setAttribute("src", "https://developers.google.com/maps/documentation/streetview/images/error-image-generic.png");
+            console.log(error);
+        });
+    }
+
     card_title.setAttribute("class", "card-title");
     card_title.textContent="Complaint from " + full_name;
 
@@ -127,12 +137,12 @@ function generateComplaintCard(complaint_data) {
     card_respond.textContent = "Respond";
 
     card_footer_div.setAttribute("class", "card-footer text-muted");
-    card_footer_div.textContent = timestamp.fromNow();
+    card_footer_div.textContent = "Filed " + timestamp.fromNow();
 
     // Nest each element and add to main document
     column_div.appendChild(card_div);
 
-    if (image_refs.length != 0) card_div.appendChild(card_img);
+    if (card_img != null) card_div.appendChild(card_img);
     card_div.appendChild(card_body_div);
     card_div.appendChild(card_footer_div);
 
@@ -150,12 +160,13 @@ function loadAllComplaints() {
         return -1;
     }
 
+    // Remove all complaints before adding new ones
+    document.getElementById("complaintCards").textContent = "";
+
     db.collection("users").get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-            // Go through each complaint and print their attributes
-            console.log(doc.id, " => ");
+            // Go through each complaint and render them on screen
             doc.data().complaints.forEach(function(complaint) {
-                console.log(complaint);
                 generateComplaintCard(complaint);
             });
         });
