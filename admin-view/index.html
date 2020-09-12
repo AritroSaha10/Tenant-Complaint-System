@@ -100,8 +100,17 @@
                 <br/>
 
                 <!-- All complaints -->
-                <div class="container">
+                <div class="container" id="homeContent" style="display: block">
+                    <input class="form-control" id="searchBox" placeholder="Search complaints..." style="margin: auto"/>
+                    <br/>
                     <div class="card-columns justify-content-center" id="complaintCards">
+                    </div>
+                </div>
+
+                <!-- TODO: Add list of users -->
+                <div class="container" id="userContents" style="display: none">
+                    <div class="" id="userCards">
+
                     </div>
                 </div>
             </div>
@@ -110,7 +119,7 @@
         <!-- Firebase Imports -->
         <script src="/__/firebase/7.17.1/firebase-app.js"></script>
         <script src="/__/firebase/7.17.1/firebase-auth.js"></script>
-        <script src="/__/firebase/7.17.1/firebase-analytics.js"></script>
+        <script src="/__/firebase/7.17.1/firebase-analytics.js" async></script>
         <script src="/__/firebase/7.17.1/firebase-firestore.js"></script>
         <script src="/__/firebase/7.17.1/firebase-storage.js"></script>
 

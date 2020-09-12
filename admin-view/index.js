@@ -83,12 +83,11 @@ function generateComplaintCard(complaint_data) {
     let card_footer_div = document.createElement("div");
 
     // Set attributes
-    column_div.setAttribute("class", "col-auto mb-3");
+    //column_div.setAttribute("class", "col-auto mb-3");
     // TODO: Create data id that identifies both the post, likely by using the timestamp and the user number
     // column_div.setAttribute("data-id", id);
 
     card_div.setAttribute("class", "card text-center");
-    card_div.setAttribute("style", "width: 22rem");
 
     card_body_div.setAttribute("class", "card-body");
     card_footer_div.setAttribute("class", "card-footer text-muted");
