@@ -63,3 +63,7 @@ img.card-img-top {
   max-height: 300px;
   margin: auto;
 }
+
+.search-button {
+  cursor: pointer;
+}

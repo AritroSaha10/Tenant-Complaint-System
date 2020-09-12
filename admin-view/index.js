@@ -11,6 +11,22 @@ function login(){
 
     let persistenceSetting;
 
+    // Set firestore persistence to allow for caching
+    db.enablePersistence().catch(function(err) {
+        if (err.code == 'failed-precondition') {
+            // Multiple tabs open, persistence can only be enabled
+            // in one tab at a a time.
+            // ...
+            console.log("Could not enable persistence because multiple tabs are open");
+        } else if (err.code == 'unimplemented') {
+            // The current browser does not support all of the
+            // features required to enable persistence
+            // ...
+            console.log("Could not enable persistence because browser doesnt support");
+        }
+    });
+
+
     // User wants persistence
     if ($("#rememberMeOption")[0].checked) {
         persistenceSetting = firebase.auth.Auth.Persistence.LOCAL;
@@ -154,7 +170,7 @@ function generateComplaintCard(complaint_data) {
 }
 
 // Load all complaints and show them
-function loadAllComplaints() {
+function loadAllComplaints(search_term) {
     if (current_user == null) {
         return -1;
     }
@@ -166,7 +182,14 @@ function loadAllComplaints() {
         querySnapshot.forEach(function(doc) {
             // Go through each complaint and render them on screen
             doc.data().complaints.forEach(function(complaint) {
-                generateComplaintCard(complaint);
+                // Filter if search term is not null
+                if (search_term != "") {
+                    if (complaint.complaint.includes(search_term)) {
+                        generateComplaintCard(complaint);
+                    }
+                } else {
+                    generateComplaintCard(complaint);
+                }
             });
         });
     }).catch(function(err) {
@@ -196,9 +219,10 @@ auth.onAuthStateChanged(function(user) {
                     // While fading user page in, load complaints
                     $("#login-page").fadeOut(400, () => {
                         document.getElementById("inputLoginButton").innerHTML = "Sign in";
-                        loadAllComplaints();
+                        loadAllComplaints("");
                         $("#user-page").fadeIn(400);
                     });
+
                  } else {
                     // User is not an admin because they are not a part of the admin list
                     logout();

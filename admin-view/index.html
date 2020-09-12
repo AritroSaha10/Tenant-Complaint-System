@@ -101,7 +101,14 @@
 
                 <!-- All complaints -->
                 <div class="container" id="homeContent" style="display: block">
-                    <input class="form-control" id="searchBox" placeholder="Search complaints..." style="margin: auto"/>
+                    <div class="input-group">
+                        <input class="form-control" id="searchBox" placeholder="Search complaints..." style="margin: auto"/>
+                        <div class="input-group-append">
+                            <a class="input-group-text search-button" onclick="loadAllComplaints(document.getElementById('searchBox').value)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div> 
                     <br/>
                     <div class="card-columns justify-content-center" id="complaintCards">
                     </div>
