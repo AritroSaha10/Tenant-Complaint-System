@@ -11,22 +11,6 @@ function login(){
 
     let persistenceSetting;
 
-    // Set firestore persistence to allow for caching
-    db.enablePersistence().catch(function(err) {
-        if (err.code == 'failed-precondition') {
-            // Multiple tabs open, persistence can only be enabled
-            // in one tab at a a time.
-            // ...
-            console.log("Could not enable persistence because multiple tabs are open");
-        } else if (err.code == 'unimplemented') {
-            // The current browser does not support all of the
-            // features required to enable persistence
-            // ...
-            console.log("Could not enable persistence because browser doesnt support");
-        }
-    });
-
-
     // User wants persistence
     if ($("#rememberMeOption")[0].checked) {
         persistenceSetting = firebase.auth.Auth.Persistence.LOCAL;
@@ -286,5 +270,21 @@ input.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
         document.getElementById("inputLoginButton").click();
+    }
+});
+
+
+// Set firestore persistence to allow for caching
+db.enablePersistence().catch(function(err) {
+    if (err.code == 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+        console.log("Could not enable persistence because multiple tabs are open");
+    } else if (err.code == 'unimplemented') {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+        console.log("Could not enable persistence because browser doesnt support");
     }
 });
