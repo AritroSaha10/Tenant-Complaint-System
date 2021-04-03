@@ -4,10 +4,10 @@ const cors = require('cors')({origin: true});
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-let email_address = "tenantcomplaintsystemnotifier@gmail.com";
-let email_password = "ASystemThatNotifiesLandlordsWhenAComplaintIsSent";
+let email_address = "EMAIL_ADDRESS";
+let email_password = "EMAIL_PASSWORD";
 
-let landlord_email = "sahaaritro21@gmail.com";
+let landlord_email = "LANDLORD_EMAIL";
 
 
 let transporter = nodemailer.createTransport({
